@@ -5,6 +5,13 @@ from threading import Thread
 import time
 import User_imput
 
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
+
+TARGET_WIDTH = 800
+TARGET_HEIGHT = 600
+
+
 class Capture(Thread):
 	def __init__(self, master):
 		super(Capture, self).__init__()
@@ -22,7 +29,7 @@ class Capture(Thread):
 		return self.img
 
 	def proc(self):
-		mon = {"top": 0, "left": 0, "width": 1920, "height": 1080}
+		mon = {"top": 0, "left": 0, "width": SCREEN_WIDTH, "height": SCREEN_HEIGHT}
 		with mss.mss() as sct:
 			return np.array(sct.grab(mon))
 
@@ -54,7 +61,7 @@ class Process(Thread):
 		return self.img
 
 	def proc(self):
-		img = cv2.resize(np.array(self.capture.get_img()), (800, 600), interpolation = cv2.INTER_AREA)
+		img = cv2.resize(np.array(self.capture.get_img()), (TARGET_WIDTH, TARGET_HEIGHT), interpolation = cv2.INTER_AREA)
 		ret, img = cv2.imencode('.jpg', img)
 		return img.tobytes()
 

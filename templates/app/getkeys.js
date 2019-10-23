@@ -8,9 +8,6 @@ document.oncontextmenu = function() {
   return false;
 }
 
-function check_stuck_key(){
-}
-
 function mouse_send(dif){
 	let x = last_mouse_pos[0] - mouse[0];
 	let y = last_mouse_pos[1] - mouse[1];
