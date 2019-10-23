@@ -26,7 +26,7 @@ function mouse_send(dif){
 
 function send_to_server(){
 	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "/postkeys", true);
+	xhr.open("POST", "/postkeys", false);
 	xhr.setRequestHeader('Content-Type', 'text');
 	xhr.send(JSON.stringify({keys : keys, mouse : mouse, click : click}));
 }
@@ -52,7 +52,7 @@ document.addEventListener('mousemove', function(event) {
 	mouse[0] = event.x;
 	mouse[1] = event.y;
 	index = keys.indexOf(2);
-	if (mouse_send(50)) {
+	if (mouse_send(10)) {
 		send_to_server();
 	}
 });

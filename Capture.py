@@ -22,7 +22,7 @@ class Capture(Thread):
 		return self.img
 
 	def proc(self):
-		mon = {"top": 0, "left": 0, "width": 800, "height": 600}
+		mon = {"top": 0, "left": 0, "width": 1920, "height": 1080}
 		with mss.mss() as sct:
 			return np.array(sct.grab(mon))
 
