@@ -18,9 +18,9 @@ app = Flask(__name__)
 def index():
 	return render_template('index.html')
 
-@app.route('/getkeys')
-def getkeys():
-	return render_template('app/getkeys.js')
+@app.route('/getimput')
+def getimput():
+	return render_template('app/getimput.js')
 
 @app.route('/postkeys', methods=['GET', 'POST'])
 def postkeys():
@@ -37,5 +37,5 @@ def video_feed():
 	return Response(loop(VideoFeed()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-	#app.run(host='localhost', debug=True)
-	app.run(host='192.168.137.1', debug=True)
+	app.run(host='localhost', debug=True)
+	#app.run(host='192.168.137.1', debug=True)
