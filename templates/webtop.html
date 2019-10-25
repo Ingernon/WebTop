@@ -8,13 +8,13 @@
 				bottom: 0;
 				left: 0;
 				right: 0;
-				max-width: 100%;
-				max-height: 100%;
+				min-width: 100%;
+				min-height: 100%;
 			}
 		</style>
 	</head>
 	<body>
-		<img id="bg" src="{{url_for('video_feed')}}">
-		<script src="{{url_for('getimput')}}"></script> 
+		<img id="bg" src="{{ url_for('video_feed') }}">
+		<script src="{{ url_for('static', filename='js/getimput.js') }}"></script> 
 	</body>
 </html>
