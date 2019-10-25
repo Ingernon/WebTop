@@ -1,6 +1,7 @@
 import flask as fl
 from ast import literal_eval
 import time
+import numpy as np
 
 from Capture import VideoFeed
 import User_imput
@@ -13,14 +14,18 @@ def loop(feed):
 		time.sleep(max(1./30 - (time.time() - start_time), 0))
 
 app = fl.Flask(__name__)
+app.secret_key = "ineedtohaveabetterkey" #this is true
 
 @app.route('/')
 def index():
+	fl.session['id']= str(np.random.randint(-999999999, 999999999)) #also need to change this
 	return fl.render_template('webtop.html')
 
 @app.route('/postkeys', methods=['GET', 'POST'])
 def postkeys():
-	rep = literal_eval(str(fl.request.trusted_hosts).split("\'")[1])
+	if 'id' in fl.session:
+		s = fl.session['id'];
+	rep = literal_eval(str(fl.request.data).split("\'")[1])
 	ui = User_imput.User_imput()
 	ui.keys = rep["keys"]
 	ui.mouse = rep["mouse"]
@@ -30,6 +35,8 @@ def postkeys():
 
 @app.route('/video_feed')
 def video_feed():
+	if 'id' in fl.session:
+		s = fl.session['id'];
 	return fl.Response(loop(VideoFeed()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
