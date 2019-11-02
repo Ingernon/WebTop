@@ -2,12 +2,7 @@ from threading import Thread
 import time
 import win32api
 import win32con
-
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 1080
-
-TARGET_WIDTH = 800
-TARGET_HEIGHT = 600
+import server_global_vars as svg
 
 class User_imput(Thread):
 	def __init__(self):
@@ -42,7 +37,7 @@ class User_imput(Thread):
 			win32api.keybd_event(i,0,0)
 
 	def translate_mouse_pos(self):
-		return (int((self.mouse[0]/TARGET_WIDTH)*SCREEN_WIDTH) ,int((self.mouse[1]/TARGET_HEIGHT)*SCREEN_HEIGHT))
+		return (int((self.mouse[0]/svg.TARGET_WIDTH)*svg.SCREEN_WIDTH) ,int((self.mouse[1]/svg.TARGET_HEIGHT)*svg.SCREEN_HEIGHT))
 
 	def move_mouse(self):
 		win32api.SetCursorPos(self.translate_mouse_pos())
@@ -50,17 +45,17 @@ class User_imput(Thread):
 	def click_down(self):
 		win32api.SetCursorPos(self.translate_mouse_pos())
 		if 1 in self.click:
-			win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,int((self.mouse[0]/TARGET_WIDTH)*SCREEN_WIDTH),int((self.mouse[1]/TARGET_HEIGHT)*SCREEN_HEIGHT),0,0)
+			win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,int((self.mouse[0]/svg.TARGET_WIDTH)*svg.SCREEN_WIDTH),int((self.mouse[1]/svg.TARGET_HEIGHT)*svg.SCREEN_HEIGHT),0,0)
 		if 2 in self.click:
-			win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,int((self.mouse[0]/TARGET_WIDTH)*SCREEN_WIDTH),int((self.mouse[1]/TARGET_HEIGHT)*SCREEN_HEIGHT),0,0)
-			win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,int((self.mouse[0]/TARGET_WIDTH)*SCREEN_WIDTH),int((self.mouse[1]/TARGET_HEIGHT)*SCREEN_HEIGHT),0,0)
+			win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN,int((self.mouse[0]/svg.TARGET_WIDTH)*svg.SCREEN_WIDTH),int((self.mouse[1]/svg.TARGET_HEIGHT)*svg.SCREEN_HEIGHT),0,0)
+			win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,int((self.mouse[0]/svg.TARGET_WIDTH)*svg.SCREEN_WIDTH),int((self.mouse[1]/svg.TARGET_HEIGHT)*svg.SCREEN_HEIGHT),0,0)
 
 	def click_up(self):
 		win32api.SetCursorPos(self.translate_mouse_pos())
 		if 1 not in self.click:
-			win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,int((self.mouse[0]/TARGET_WIDTH)*SCREEN_WIDTH),int((self.mouse[1]/TARGET_HEIGHT)*SCREEN_HEIGHT),0,0)
+			win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,int((self.mouse[0]/svg.TARGET_WIDTH)*svg.SCREEN_WIDTH),int((self.mouse[1]/svg.TARGET_HEIGHT)*svg.SCREEN_HEIGHT),0,0)
 		#if 2 not in self.click:
-			#win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,int((self.mouse[0]/TARGET_WIDTH)*SCREEN_WIDTH),int((self.mouse[1]/TARGET_HEIGHT)*SCREEN_HEIGHT),0,0)
+			#win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,int((self.mouse[0]/svg.TARGET_WIDTH)*svg.SCREEN_WIDTH),int((self.mouse[1]/svg.TARGET_HEIGHT)*svg.SCREEN_HEIGHT),0,0)
 
 	def run(self):
 		# while not self.stop:

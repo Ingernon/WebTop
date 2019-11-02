@@ -3,6 +3,7 @@ from ast import literal_eval
 import time
 import numpy as np
 
+import server_global_vars as svg
 from Capture import VideoFeed
 import User_imput
 
@@ -18,7 +19,7 @@ app.secret_key = "ineedtohaveabetterkey" #this is true
 
 @app.route('/')
 def index():
-	fl.session['id']= str(np.random.randint(-999999999, 999999999)) #also need to change this
+	fl.session['id']= str(np.random.randint(-999999999,999999999)) #also need to change this
 	return fl.render_template('webtop.html')
 
 @app.route('/postkeys', methods=['GET', 'POST'])
@@ -33,6 +34,15 @@ def postkeys():
 	ui.start()
 	return ""
 
+@app.route('/size', methods=['GET', 'POST'])
+def size():
+	if 'id' in fl.session:
+		s = fl.session['id'];
+	rep = literal_eval(str(fl.request.data).split("\'")[1])
+	svg.TARGET_WIDTH = rep["width"]
+	svg.TARGET_HEIGHT = rep["height"]
+	return ""
+
 @app.route('/video_feed')
 def video_feed():
 	if 'id' in fl.session:
@@ -40,5 +50,5 @@ def video_feed():
 	return fl.Response(loop(VideoFeed()), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-	app.run(host='localhost', debug=True)
-	#app.run(host='192.168.137.1', debug=True)
+	#app.run(host='localhost', debug=True)
+	app.run(host='192.168.137.1', debug=True)

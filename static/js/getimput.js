@@ -22,11 +22,22 @@ function mouse_send(dif){
 }
 
 function send_to_server(){
-	var xhr = new XMLHttpRequest();
+	let xhr = new XMLHttpRequest();
 	xhr.open("POST", "/postkeys", false);
 	xhr.setRequestHeader('Content-Type', 'text');
 	xhr.send(JSON.stringify({keys : keys, mouse : mouse, click : click}));
 }
+
+function send_size(){
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", "/size", false);
+	xhr.setRequestHeader('Content-Type', 'text');
+	xhr.send(JSON.stringify({width : document.body.clientWidth, height : document.body.clientHeight}));	
+}
+
+window.onresize = function(event) {
+	send_size();
+};
 
 document.addEventListener('keydown', function(event) {
 	event.preventDefault();
@@ -78,3 +89,5 @@ document.addEventListener('mouseup', function(event) {
 	}
 	send_to_server();
 });
+
+send_size()

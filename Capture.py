@@ -4,12 +4,7 @@ import numpy as np
 from threading import Thread
 import time
 import User_imput
-
-SCREEN_WIDTH = 1920
-SCREEN_HEIGHT = 1080
-
-TARGET_WIDTH = 800
-TARGET_HEIGHT = 600
+import server_global_vars as svg
 
 
 class Capture(Thread):
@@ -29,17 +24,17 @@ class Capture(Thread):
 		return self.img
 
 	def proc(self):
-		mon = {"top": 0, "left": 0, "width": SCREEN_WIDTH, "height": SCREEN_HEIGHT}
+		mon = {"top": 0, "left": 0, "width": svg.SCREEN_WIDTH, "height": svg.SCREEN_HEIGHT}
 		with mss.mss() as sct:
 			return np.array(sct.grab(mon))
 
 	def run(self):
 		while not self.stop:
 			if not self.pause:
-				#start_time = time.time()
+				start_time = time.time()
 				self.img = self.proc()
 				self.pause_check()
-				#print("thread capture:", 1.0 / ((time.time() - start_time)+0.0001))
+				print("thread capture:", 1.0 / ((time.time() - start_time)+0.0001))
 			else:
 				time.sleep(1)
 
@@ -61,7 +56,7 @@ class Process(Thread):
 		return self.img
 
 	def proc(self):
-		img = cv2.resize(np.array(self.capture.get_img()), (TARGET_WIDTH, TARGET_HEIGHT), interpolation = cv2.INTER_AREA)
+		img = cv2.resize(np.array(self.capture.get_img()), (svg.TARGET_WIDTH, svg.TARGET_HEIGHT), interpolation = cv2.INTER_AREA)
 		ret, img = cv2.imencode('.jpg', img)
 		return img.tobytes()
 
@@ -69,9 +64,9 @@ class Process(Thread):
 		while not self.stop:
 			if not self.pause:
 				self.pause_check()
-				#start_time = time.time()
+				start_time = time.time()
 				self.img = self.proc()
-				#print("thread process:", 1.0 / ((time.time() - start_time)+0.0001))
+				print("thread process:", 1.0 / ((time.time() - start_time)+0.0001))
 			else:
 				time.sleep(1)
 		
