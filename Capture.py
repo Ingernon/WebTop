@@ -31,10 +31,10 @@ class Capture(Thread):
 	def run(self):
 		while not self.stop:
 			if not self.pause:
-				start_time = time.time()
+				#start_time = time.time()
 				self.img = self.proc()
 				self.pause_check()
-				print("thread capture:", 1.0 / ((time.time() - start_time)+0.0001))
+				#print("thread capture:", 1.0 / ((time.time() - start_time)+0.0001))
 			else:
 				time.sleep(1)
 
@@ -64,9 +64,9 @@ class Process(Thread):
 		while not self.stop:
 			if not self.pause:
 				self.pause_check()
-				start_time = time.time()
+				#start_time = time.time()
 				self.img = self.proc()
-				print("thread process:", 1.0 / ((time.time() - start_time)+0.0001))
+				#print("thread process:", 1.0 / ((time.time() - start_time)+0.0001))
 			else:
 				time.sleep(1)
 		
