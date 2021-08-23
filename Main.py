@@ -6,6 +6,7 @@ import numpy as np
 import server_global_vars as svg
 from Capture import VideoFeed
 import User_imput
+import keyboard
 
 def loop(feed):
 	while True:
